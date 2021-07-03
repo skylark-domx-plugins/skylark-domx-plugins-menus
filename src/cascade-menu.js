@@ -1,4 +1,4 @@
-define([
+ define([
   "skylark-langx/langx",
   "skylark-domx-query",
   "skylark-domx-lists",
@@ -7,22 +7,23 @@ define([
 ],function(langx,$,lists,plugins,menus){
 
 
-  var Foldable = plugins.Plugin.inherit({
-    klassName : "Foldable",
+  var CascadeMenu = plugins.Plugin.inherit({
+    klassName : "CascadeMenu",
 
-    pluginName : "lark.menus.foldable",
+    pluginName : "lark.menus.cascade",
 
     _construct : function(elm,options) {
         this.overrided(elm,options);
 
         lists.multitier(elm,langx.mixin({
+          "mode" : "cascade"
         },this.options));
     }
 
   });
 
 
-  plugins.register(Foldable);
+  plugins.register(CascadeMenu);
 
-  return menus.Foldable = Foldable; 
+  return menus.CascadeMenu = CascadeMenu;	
 });

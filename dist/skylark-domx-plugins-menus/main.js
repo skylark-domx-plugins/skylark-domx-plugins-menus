@@ -5,5 +5,5 @@
  * @link https://github.com/skylark-domx/skylark-domx-plugins-menus/
  * @license MIT
  */
-define(["./menus","./foldable","./cascadable"],function(e){return e});
+define(["./menus","./accordion-menu","./cascade-menu","./tree-menu"],function(e){return e});
 //# sourceMappingURL=sourcemaps/main.js.map

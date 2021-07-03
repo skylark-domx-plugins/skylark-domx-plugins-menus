@@ -1,10 +1,10 @@
-.lark-listing, .lark-listing ul {
+.lark-menu, .lark-menu ul {
     margin: 0;
     list-style: none;
 /*    background: #343a40; */
 }
 
-.lark-listing  li {
+.lark-menu  li {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -15,7 +15,7 @@
     position: relative;
 }
 
-.lark-listing {
+.lark-menu {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -26,29 +26,30 @@
 }
 
 /*
-.lark-listing li + li {
+.lark-menu li + li {
   margin-top: 5px;
 }
 
-.lark-listing li:first-child {
+.lark-menu li:first-child {
   margin-top: 5px;
 }
-.lark-listing li:last-child {
+.lark-menu li:last-child {
   margin-bottom: 5px;
 }
 */
 
-.lark-listing .arrow {
+.lark-menu .arrow {
   float: right;
   line-height: 1.42857;
 }
-*[dir="rtl"] .lark-listing .arrow {
+
+*[dir="rtl"] .lark-menu .arrow {
   float: left;
 }
 
-.lark-listing a:hover,
-.lark-listing a:focus,
-.lark-listing a:active {
+.lark-menu a:hover,
+.lark-menu a:focus,
+.lark-menu a:active {
     color: #f8f9fa;
     text-decoration: none;
     background: #0b7285;
@@ -56,11 +57,11 @@
 
 
 /*---*/
-.lark-listing .mm-collapse:not(.mm-show) {
+.lark-menu .mm-collapse:not(.mm-show) {
   display: none;
 }
 
-.lark-listing .mm-collapsing {
+.lark-menu .mm-collapsing {
   position: relative;
   height: 0;
   overflow: hidden;
@@ -69,11 +70,11 @@
   transition-property: height, visibility;
 }
 
-.lark-listing .has-arrow {
+.lark-menu .has-arrow {
   position: relative;
 }
 
-.lark-listing .has-arrow::after {
+.lark-menu .has-arrow::after {
   position: absolute;
   content: '';
   width: .5em;
@@ -90,21 +91,21 @@
   transition: all .3s ease-out;
 }
 
-*[dir="rtl"] .lark-listing .has-arrow::after {
+*[dir="rtl"] .lark-menu .has-arrow::after {
   right: auto;
   left: 1em;
   -webkit-transform: rotate(135deg) translate(0, -50%);
   transform: rotate(135deg) translate(0, -50%);
 }
 
-.lark-listing .active > .has-arrow::after,
-.lark-listing .has-arrow[aria-expanded="true"]::after {
+.lark-menu .active > .has-arrow::after,
+.lark-menu .has-arrow[aria-expanded="true"]::after {
   -webkit-transform: rotate(-135deg) translate(0, -50%);
   transform: rotate(-135deg) translate(0, -50%);
 }
 
-*[dir="rtl"] .lark-listing .active > .has-arrow::after,
-*[dir="rtl"] .lark-listing .has-arrow[aria-expanded="true"]::after {
+*[dir="rtl"] .lark-menu .active > .has-arrow::after,
+*[dir="rtl"] .lark-menu .has-arrow[aria-expanded="true"]::after {
   -webkit-transform: rotate(225deg) translate(0, -50%);
   transform: rotate(225deg) translate(0, -50%);
 }

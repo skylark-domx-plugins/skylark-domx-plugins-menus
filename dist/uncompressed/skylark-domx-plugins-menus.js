@@ -91,7 +91,7 @@ define('skylark-domx-plugins-menus/menus',[
 ],function(skylark){
 	return skylark.attach("domx.plugins.menus");
 });
-define('skylark-domx-plugins-menus/foldable',[
+define('skylark-domx-plugins-menus/accordion-menu',[
   "skylark-langx/langx",
   "skylark-domx-query",
   "skylark-domx-lists",
@@ -100,10 +100,10 @@ define('skylark-domx-plugins-menus/foldable',[
 ],function(langx,$,lists,plugins,menus){
 
 
-  var Foldable = plugins.Plugin.inherit({
-    klassName : "Foldable",
+  var AccordionMenu = plugins.Plugin.inherit({
+    klassName : "AccordionMenu",
 
-    pluginName : "lark.menus.foldable",
+    pluginName : "lark.menus.accordion",
 
     _construct : function(elm,options) {
         this.overrided(elm,options);
@@ -115,11 +115,11 @@ define('skylark-domx-plugins-menus/foldable',[
   });
 
 
-  plugins.register(Foldable);
+  plugins.register(AccordionMenu);
 
-  return menus.Foldable = Foldable; 
+  return menus.AccordionMenu = AccordionMenu; 
 });
- define('skylark-domx-plugins-menus/cascadable',[
+ define('skylark-domx-plugins-menus/cascade-menu',[
   "skylark-langx/langx",
   "skylark-domx-query",
   "skylark-domx-lists",
@@ -128,10 +128,10 @@ define('skylark-domx-plugins-menus/foldable',[
 ],function(langx,$,lists,plugins,menus){
 
 
-  var Cascadable = plugins.Plugin.inherit({
-    klassName : "Cascadable",
+  var CascadeMenu = plugins.Plugin.inherit({
+    klassName : "CascadeMenu",
 
-    pluginName : "lark.menus.cascadable",
+    pluginName : "lark.menus.cascade",
 
     _construct : function(elm,options) {
         this.overrided(elm,options);
@@ -144,14 +144,51 @@ define('skylark-domx-plugins-menus/foldable',[
   });
 
 
-  plugins.register(Cascadable);
+  plugins.register(CascadeMenu);
 
-  return menus.Cascadable = Cascadable;	
+  return menus.CascadeMenu = CascadeMenu;	
+});
+ define('skylark-domx-plugins-menus/tree-menu',[
+  "skylark-langx/langx",
+  "skylark-domx-query",
+  "skylark-domx-lists",
+  "skylark-domx-plugins-base",
+  "./menus",
+  "skylark-domx-plugins-toggles"
+],function(langx,$,lists,plugins,menus){
+  'use strict'
+
+
+  var TreeMenu = plugins.Plugin.inherit({
+    klassName : "Tree",
+
+    pluginName : "lark.menus.tree",
+
+    _construct : function(elm,options) {
+        plugins.Plugin.prototype._construct.call(this,elm,options);
+
+        lists.multitier(elm,langx.mixin({
+          hide : function($el) {
+            $el.plugin("lark.toggles.collapse").hide();
+          },
+          toggle : function($el) {
+            $el.plugin("lark.toggles.collapse").toggle();
+          }
+        },this.options));
+    }
+
+  });
+
+
+  plugins.register(TreeMenu);
+
+  return menus.TreeMenu = TreeMenu;	
 });
 define('skylark-domx-plugins-menus/main',[
     "./menus",
-    "./foldable",
-    "./cascadable"
+    "./accordion-menu",
+    "./cascade-menu",
+    "./tree-menu"
 ], function(menus) {
     return menus;
 });

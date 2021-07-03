@@ -1,4 +1,4 @@
- define([
+define([
   "skylark-langx/langx",
   "skylark-domx-query",
   "skylark-domx-lists",
@@ -7,23 +7,22 @@
 ],function(langx,$,lists,plugins,menus){
 
 
-  var Cascadable = plugins.Plugin.inherit({
-    klassName : "Cascadable",
+  var AccordionMenu = plugins.Plugin.inherit({
+    klassName : "AccordionMenu",
 
-    pluginName : "lark.menus.cascadable",
+    pluginName : "lark.menus.accordion",
 
     _construct : function(elm,options) {
         this.overrided(elm,options);
 
         lists.multitier(elm,langx.mixin({
-          "mode" : "cascade"
         },this.options));
     }
 
   });
 
 
-  plugins.register(Cascadable);
+  plugins.register(AccordionMenu);
 
-  return menus.Cascadable = Cascadable;	
+  return menus.AccordionMenu = AccordionMenu; 
 });

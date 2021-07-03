@@ -1,7 +1,8 @@
 define([
     "./menus",
-    "./foldable",
-    "./cascadable"
+    "./accordion-menu",
+    "./cascade-menu",
+    "./tree-menu"
 ], function(menus) {
     return menus;
 });

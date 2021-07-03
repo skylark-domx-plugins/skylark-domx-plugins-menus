@@ -1,21 +1,21 @@
-.lark-listing.cascade, .lark-listing.cascade ul {
+.lark-menu.cascade, .lark-menu.cascade ul {
     padding : 0;
     background: #343a40; 
 }
 
-.lark-listing.cascade ul {
+.lark-menu.cascade ul {
   position: absolute;
   left : 100%;
   z-index : 1001;
   width : 150px;
 }
 
-*[dir="rtl"] .lark-listing.cascade ul {
+*[dir="rtl"] .lark-menu.cascade ul {
    left : auto;
    right: 100%;
  }
 
-.lark-listing.cascade a {
+.lark-menu.cascade a {
     display: block;
     padding: 13px 15px; 
     color: #adb5bd;

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
@@ -6,7 +6,7 @@
     <title>listgroup.js Test Suite</title>
     <link rel="stylesheet" href="../themes/twbs/css/bootstrap.css">
     <link rel="stylesheet" href="../themes/twbs/css/font-awesome.4.7.min.css">
-    <link rel="stylesheet" href="../../skins/default/listing.css">
+    <link rel="stylesheet" href="../../skins/default/menu.css">
     <link rel="stylesheet" href="../../skins/default/accordion.css">
     <link rel="stylesheet" href="../app.css">
     <style>
@@ -25,7 +25,7 @@
         <div class="row">
             <aside class="col-md-3">
                 <nav class="sidebar-nav">
-                    <ul class="lark-listing accordion multiExpand" id="menu1">
+                    <ul class="lark-menu accordion multiExpand" id="menu1">
                         <li>
                             <a class="has-arrow" href="#">
                                 <span class="fa fa-fw fa-github fa-lg"></span> metisMenu
@@ -102,11 +102,7 @@
                         <pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
       $(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
 
-            $('.lark-listing.accordion').plugin("lark.listing",{
-              "multitier" : {
-                "mode" : "accordion",
-                "multiExpand" : true
-              }                
+            $('.lark-menu.accordion').plugin("lark.menus",{
             });
       });
     </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
@@ -122,7 +118,7 @@
         <div class="row">
             <div class="col-md-3">
                 <nav class="sidebar-nav">
-                    <ul class="lark-listing accordion noMultiExpand" id="menu2">
+                    <ul class="lark-menu accordion noMultiExpand" id="menu2">
                         <li>
                             <a class="has-arrow" href="#">
                                 <span class="fa fa-fw fa-github fa-lg"></span> metisMenu
@@ -200,9 +196,8 @@
                         <pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
   $(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
 
-            $('.lark-listing.accordion').plugin("lark.listing",{
+            $('.lark-menu.accordion').plugin("lark.menus.accordion",{
               "multitier" : {
-                "mode" : "accordion",
                 "multiExpand" : false
               }                
             });
@@ -240,7 +235,7 @@
 
             <div class="col-md-3">
                 <nav class="sidebar-nav">
-                    <ul class="lark-listing accordion multiExpand" id="menu3">
+                    <ul class="lark-menu accordion multiExpand" id="menu3">
                         <li>
                             <a class="has-arrow" href="#">
                                 <span class="fa fa-fw fa-github fa-lg"></span> metisMenu
@@ -318,12 +313,12 @@
     <script>
         var initPage = function(langx,domx) {
             var $ = domx.query;
-            $('.lark-listing.accordion.multiExpand').plugin("lark.menus.foldable",{
+            $('.lark-menu.accordion.multiExpand').plugin("lark.menus.accordion",{
               "multitier" : {
                 "multiExpand" : true
               }                
             });
-            $('.lark-listing.accordion.noMultiExpand').plugin("lark.menus.foldable",{
+            $('.lark-menu.accordion.noMultiExpand').plugin("lark.menus.accordion",{
               "multitier" : {
                 "multiExpand" : false
               }                
