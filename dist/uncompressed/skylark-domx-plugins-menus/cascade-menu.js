@@ -1,22 +1,22 @@
- define([
+define([
   "skylark-langx/langx",
   "skylark-domx-query",
   "skylark-domx-lists",
   "skylark-domx-plugins-base",
-  "./menus"
-],function(langx,$,lists,plugins,menus){
+  "./menus",
+  "./menu"
+],function(langx,$,lists,plugins,menus,Menu){
+  'use strict'
 
-
-  var CascadeMenu = plugins.Plugin.inherit({
+  var CascadeMenu = Menu.inherit({
     klassName : "CascadeMenu",
 
     pluginName : "lark.menus.cascade",
 
     _construct : function(elm,options) {
-        this.overrided(elm,options);
+        Menu.prototype._construct.call(this,elm,options);
 
         lists.multitier(elm,langx.mixin({
-          "mode" : "cascade"
         },this.options));
     }
 

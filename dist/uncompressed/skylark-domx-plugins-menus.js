@@ -91,7 +91,7 @@ define('skylark-domx-plugins-menus/menus',[
 ],function(skylark){
 	return skylark.attach("domx.plugins.menus");
 });
-define('skylark-domx-plugins-menus/accordion-menu',[
+define('skylark-domx-plugins-menus/menu',[
   "skylark-langx/langx",
   "skylark-domx-query",
   "skylark-domx-lists",
@@ -100,13 +100,100 @@ define('skylark-domx-plugins-menus/accordion-menu',[
 ],function(langx,$,lists,plugins,menus){
 
 
-  var AccordionMenu = plugins.Plugin.inherit({
+  var Menu = plugins.Plugin.inherit({
+    klassName : "Menu",
+
+    pluginName : "lark.menus.menu",
+
+    options : {
+      template : "",
+
+      classes : {
+        base : "lark-menu"
+      },
+
+      selectors : {
+
+      },
+
+      item : {
+        templates : {
+          general : "",
+          separator : "",
+          hasChildern : ""
+        } 
+      },
+
+      chidren : {
+        template : "<ul></ul>",
+        classes : {
+          base : "children-menu"
+        }
+      },
+
+      data : {
+        ///items : []
+      }
+    },
+
+    _construct : function(elm,options) {
+        plugins.Plugin.prototype._construct.call(this,elm,options);
+
+    },
+
+    renderMenuItemHtml : function(itemData) {
+      if (!this._renderItemHtml) {
+        let itemTpl = this.options.item.template;
+        if (langx.isString(itemTpl)) {
+          this._renderItemHtml = langx.template(itemTpl);
+        } else if (langx.isFunction(itemTpl)) {
+          this._renderItemHtml = itemTpl;
+        }
+      }
+
+      return this._renderItemHtml(itemData);
+    },
+
+    renderGeneralMenuItem : function(itemData) {
+      if (!this._renderItemHtml) {
+        let itemTpl = this.options.item.template;
+        if (langx.isString(itemTpl)) {
+          this._renderItemHtml = langx.template(itemTpl);
+        } else if (langx.isFunction(itemTpl)) {
+          this._renderItemHtml = itemTpl;
+        }
+      }
+    },
+
+    renderHasChildrenMenuItem : function(itemData) {
+
+    }   
+
+
+  });
+
+
+  plugins.register(Menu);
+
+  return menus.Menu = Menu; 
+});
+define('skylark-domx-plugins-menus/accordion-menu',[
+  "skylark-langx/langx",
+  "skylark-domx-query",
+  "skylark-domx-lists",
+  "skylark-domx-plugins-base",
+  "./menus",
+  "./menu"
+],function(langx,$,lists,plugins,menus,Menu){
+  'use strict'
+  
+   var AccordionMenu = Menu.inherit({
     klassName : "AccordionMenu",
 
     pluginName : "lark.menus.accordion",
 
     _construct : function(elm,options) {
-        this.overrided(elm,options);
+        Menu.prototype._construct.call(this,elm,options);
 
         lists.multitier(elm,langx.mixin({
         },this.options));
@@ -119,25 +206,25 @@ define('skylark-domx-plugins-menus/accordion-menu',[
 
   return menus.AccordionMenu = AccordionMenu; 
 });
- define('skylark-domx-plugins-menus/cascade-menu',[
+define('skylark-domx-plugins-menus/cascade-menu',[
   "skylark-langx/langx",
   "skylark-domx-query",
   "skylark-domx-lists",
   "skylark-domx-plugins-base",
-  "./menus"
-],function(langx,$,lists,plugins,menus){
+  "./menus",
+  "./menu"
+],function(langx,$,lists,plugins,menus,Menu){
+  'use strict'
 
-
-  var CascadeMenu = plugins.Plugin.inherit({
+  var CascadeMenu = Menu.inherit({
     klassName : "CascadeMenu",
 
     pluginName : "lark.menus.cascade",
 
     _construct : function(elm,options) {
-        this.overrided(elm,options);
+        Menu.prototype._construct.call(this,elm,options);
 
         lists.multitier(elm,langx.mixin({
-          "mode" : "cascade"
         },this.options));
     }
 
@@ -154,18 +241,18 @@ define('skylark-domx-plugins-menus/accordion-menu',[
   "skylark-domx-lists",
   "skylark-domx-plugins-base",
   "./menus",
+  "./menu",
   "skylark-domx-plugins-toggles"
-],function(langx,$,lists,plugins,menus){
+],function(langx,$,lists,plugins,menus,Menu){
   'use strict'
 
-
-  var TreeMenu = plugins.Plugin.inherit({
+  var TreeMenu = Menu.inherit({
     klassName : "Tree",
 
     pluginName : "lark.menus.tree",
 
     _construct : function(elm,options) {
-        plugins.Plugin.prototype._construct.call(this,elm,options);
+        Menu.prototype._construct.call(this,elm,options);
 
         lists.multitier(elm,langx.mixin({
           hide : function($el) {

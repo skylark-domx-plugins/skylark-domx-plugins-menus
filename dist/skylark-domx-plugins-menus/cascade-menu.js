@@ -5,5 +5,5 @@
  * @link https://github.com/skylark-domx/skylark-domx-plugins-menus/
  * @license MIT
  */
-define(["skylark-langx/langx","skylark-domx-query","skylark-domx-lists","skylark-domx-plugins-base","./menus"],function(e,s,a,n,i){var r=n.Plugin.inherit({klassName:"CascadeMenu",pluginName:"lark.menus.cascade",_construct:function(s,n){this.overrided(s,n),a.multitier(s,e.mixin({mode:"cascade"},this.options))}});return n.register(r),i.CascadeMenu=r});
+define(["skylark-langx/langx","skylark-domx-query","skylark-domx-lists","skylark-domx-plugins-base","./menus","./menu"],function(s,e,n,a,t,i){"use strict";var r=i.inherit({klassName:"CascadeMenu",pluginName:"lark.menus.cascade",_construct:function(e,a){i.prototype._construct.call(this,e,a),n.multitier(e,s.mixin({},this.options))}});return a.register(r),t.CascadeMenu=r});
 //# sourceMappingURL=sourcemaps/cascade-menu.js.map

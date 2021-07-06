@@ -3,17 +3,18 @@ define([
   "skylark-domx-query",
   "skylark-domx-lists",
   "skylark-domx-plugins-base",
-  "./menus"
-],function(langx,$,lists,plugins,menus){
-
-
-  var AccordionMenu = plugins.Plugin.inherit({
+  "./menus",
+  "./menu"
+],function(langx,$,lists,plugins,menus,Menu){
+  'use strict'
+  
+   var AccordionMenu = Menu.inherit({
     klassName : "AccordionMenu",
 
     pluginName : "lark.menus.accordion",
 
     _construct : function(elm,options) {
-        this.overrided(elm,options);
+        Menu.prototype._construct.call(this,elm,options);
 
         lists.multitier(elm,langx.mixin({
         },this.options));

@@ -5,5 +5,5 @@
  * @link https://github.com/skylark-domx/skylark-domx-plugins-menus/
  * @license MIT
  */
-define(["skylark-langx/langx","skylark-domx-query","skylark-domx-lists","skylark-domx-plugins-base","./menus"],function(n,i,r,e,s){var o=e.Plugin.inherit({klassName:"AccordionMenu",pluginName:"lark.menus.accordion",_construct:function(i,e){this.overrided(i,e),r.multitier(i,n.mixin({},this.options))}});return e.register(o),s.AccordionMenu=o});
+define(["skylark-langx/langx","skylark-domx-query","skylark-domx-lists","skylark-domx-plugins-base","./menus","./menu"],function(n,i,r,s,t,e){"use strict";var o=e.inherit({klassName:"AccordionMenu",pluginName:"lark.menus.accordion",_construct:function(i,s){e.prototype._construct.call(this,i,s),r.multitier(i,n.mixin({},this.options))}});return s.register(o),t.AccordionMenu=o});
 //# sourceMappingURL=sourcemaps/accordion-menu.js.map

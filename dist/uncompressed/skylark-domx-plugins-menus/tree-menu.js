@@ -4,18 +4,18 @@
   "skylark-domx-lists",
   "skylark-domx-plugins-base",
   "./menus",
+  "./menu",
   "skylark-domx-plugins-toggles"
-],function(langx,$,lists,plugins,menus){
+],function(langx,$,lists,plugins,menus,Menu){
   'use strict'
 
-
-  var TreeMenu = plugins.Plugin.inherit({
+  var TreeMenu = Menu.inherit({
     klassName : "Tree",
 
     pluginName : "lark.menus.tree",
 
     _construct : function(elm,options) {
-        plugins.Plugin.prototype._construct.call(this,elm,options);
+        Menu.prototype._construct.call(this,elm,options);
 
         lists.multitier(elm,langx.mixin({
           hide : function($el) {

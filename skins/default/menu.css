@@ -4,16 +4,6 @@
 /*    background: #343a40; */
 }
 
-.lark-menu  li {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    position: relative;
-}
 
 .lark-menu {
     display: -webkit-box;
@@ -53,21 +43,6 @@
     color: #f8f9fa;
     text-decoration: none;
     background: #0b7285;
-}
-
-
-/*---*/
-.lark-menu .mm-collapse:not(.mm-show) {
-  display: none;
-}
-
-.lark-menu .mm-collapsing {
-  position: relative;
-  height: 0;
-  overflow: hidden;
-  transition-timing-function: ease;
-  transition-duration: .35s;
-  transition-property: height, visibility;
 }
 
 .lark-menu .has-arrow {

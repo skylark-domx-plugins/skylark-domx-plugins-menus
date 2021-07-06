@@ -8,10 +8,10 @@ define([
 ],function(langx,$,lists,plugins,menus,Menu){
   'use strict'
 
-  var CascadeMenu = Menu.inherit({
-    klassName : "CascadeMenu",
+  var NavMenu = Menu.inherit({
+    klassName : "NavMenu",
 
-    pluginName : "lark.menus.cascade",
+    pluginName : "lark.menus.nav",
 
     _construct : function(elm,options) {
         Menu.prototype._construct.call(this,elm,options);
@@ -23,7 +23,7 @@ define([
   });
 
 
-  plugins.register(CascadeMenu);
+  plugins.register(NavMenu);
 
-  return menus.CascadeMenu = CascadeMenu;	
+  return menus.NavMenu = NavMenu;	
 });
