@@ -153,6 +153,28 @@
           background: #f22840;
         }
 
+        ul.flip-items {
+            display: block;
+            list-style: none;
+        }
+
+        ul.flip-items li {
+            display:  none;
+            position: relative;
+            height: 300px
+        }
+
+        ul.flip-items li img {
+            display: block;
+            position: absolute;;
+             left: 0;
+            top:0;
+            right: 0;
+            bottom: 0;         
+            margin: auto; 
+        }
+
+
     </style>
 </head>
 <body>
@@ -245,18 +267,25 @@
     <script type="text/javascript" src="../require.js" data-main="../bootstrap.js"></script>
     <script>
         var initPage = function(langx,domx) {
-            let $ = domx.query;
+            let $ = domx.query,
+                fx = domx.fx;
+
             let $imageItems = $("ul.flip-items > li"),
                 $nav,
                 $navItems,
                 $navLinks,
+                currentIndex,
+                $currentItem,
+
                 classes = {
                     navItem  : "menu-item",
                     navCategory: "category",
                     navCategoryLink : "link-category",
                     navChild : "child",
-                    navLink : "link"
+                    navLink : "link",
+                    navCurrent : "current"
                 };
+
             var navCategories = {};
 
 
@@ -298,6 +327,46 @@
                 navLink.wrap('<li class="' + classes.navItem + '">');
 
             });
+
+            $navItems = $nav.find('.' + classes.navItem);
+
+            $nav.on('click', 'a', function(e) {
+                var index = $(this).data('index');
+                if ( index >= 0 ) {
+                    show(index);
+                    e.preventDefault();
+                }
+            });
+
+            function updateNavMenu() {
+
+                var category = $currentItem.data('flip-category');
+
+                $navItems.removeClass(classes.navCurrent);
+
+                $navLinks
+                    .filter(function() {
+                        return ($(this).data('index') === currentIndex || (category && $(this).data('category') === category));
+                    })
+                    .parent()
+                    .addClass(classes.navCurrent);
+
+            }
+
+            function show(index) {
+                let $pre = $currentItem;
+                currentIndex =index;
+                $currentItem = $imageItems.eq(currentIndex);
+
+                if ($pre) {
+                    $pre.hide(100,function(){
+                        $currentItem.show(100);
+                    });
+                } else {
+                    $currentItem.show(100);                    
+                }
+                updateNavMenu();
+            }
 
             /*
             $('.lark-menu.cascade.multiExpand').plugin("lark.menus.cascade",{
