@@ -292,23 +292,61 @@
             $nav = $("#carousel .lark-menu"); //$('<ul class="' + classes.nav + '" role="navigation" />');
             $navLinks = $('');
 
+            let itemsData = []
             $imageItems.each(function(i) {
                 var $imageItem = $(this),
                     category = $imageItem.data('flip-category'),
-                    itemTitle = $imageItem.data('flip-title') || $imageItem.attr('title') || i,
-                    navLink = $('<a href="#" class="' + classes.navLink + '">' + itemTitle + '</a>')
-                    .data('index', i);
+                    title = $imageItem.data('flip-title') || $imageItem.attr('title') || i,
+                    index =  i;
+
+                let itemData = {
+                  category,
+                  title,
+                  index
+                };
+
+                if ( category ) {
+                    let itemsCategory = itemsData[category];
+
+                    if (!itemsCategory) {
+                      itemsCategory = {
+                        category,
+                        index,
+                        children : [
+                        ]
+                      };
+                      itemsData.push(itemsCategory);
+                      itemsData[category] = itemsCategory
+
+                    }
+
+                    itemsCategory.children.push(itemData);
+
+                } else {
+                  itemsData.push(itemData);
+                }
+
+            });
+
+            for (let i=0; i<itemsData.length;i++) {
+                let itemData = itemsData[i];
+                let navLink = $('<a href="#" class="' + classes.navLink + '">' + itemData.title + '</a>');
+
+                if (itemData.index !== undefined) {
+                    navLink.data('index', itemData.index);
+                }
 
                 $navLinks = $navLinks.add(navLink);
 
-                if ( category ) {
-
+                if (itemData.children) {
+                    let category = itemData.category,
+                        childrenItems = itemData.children;
                     if ( !navCategories[category] ) {
 
                         var categoryItem = $('<li class="' + classes.navItem + ' ' + classes.navCategory + '">');
                         var categoryLink = $('<a href="#" class="' + classes.navLink + ' ' + classes.navCategoryLink + '" data-flip-category="' + category + '">' + category + '</a>')
-                                .data('category', category)
-                                .data('index', i);
+                                .data('category', itemData.category)
+                                .data('index', itemData.index);
 
                         navCategories[category] = $('<ul class="' + classes.navChild + '" />');
 
@@ -319,14 +357,21 @@
                             .appendTo($nav);
                     }
 
-                    navCategories[category].append(navLink);
+                    for (let j =0 ;j<childrenItems.length;j++) {
+                       let childItemData = childrenItems[j];
+                       let navLink1 = $('<a href="#" class="' + classes.navLink + '">' + childItemData.title + '</a>')
+                        .data('index', childItemData.index);
+
+                      $navLinks = $navLinks.add(navLink1);
+                      navCategories[category].append(navLink1);                  
+                      navLink1.wrap('<li class="' + classes.navItem + '">');
+                    }
                 } else {
-                    $nav.append(navLink);
+                  $nav.append(navLink);                   
                 }
-
                 navLink.wrap('<li class="' + classes.navItem + '">');
+            }
 
-            });
 
             $navItems = $nav.find('.' + classes.navItem);
 
