@@ -15,7 +15,6 @@
 
 .lark-menu.nav .menu-item {
   display: inline-block;
-  position: static;
   margin: 0 0.25em;
 }
 
@@ -51,13 +50,13 @@
   transition: inherit;
 }
 
-.lark-menu.nav .menu-item.active > .link,
+.lark-menu.nav .menu-item.current > .link,
 .lark-menu.nav .link:hover,
 .lark-menu.nav .link:focus {
   color: #FFF;
 }
 
-.lark-menu.nav .menu-item.active > .link::after,
+.lark-menu.nav .menu-item.current > .link::after,
 .lark-menu.nav .link:hover::after,
 .lark-menu.nav .link:focus::after {
   -webkit-transform: translateY(0);
@@ -65,8 +64,8 @@
           transform: translateY(0);
 }
 
-.lark-menu.nav .submenu {
-/*  display: none; */
+.lark-menu.nav .child {
+  display: none;
   position: absolute;
   top: 100%;
   left: 0;
@@ -77,20 +76,20 @@
   z-index: 1;
 }
 
-.lark-menu.nav .submenu .link {
+.lark-menu.nav .child .link {
   color: #FFF;
 }
 
-.lark-menu.nav .submenu .link::after {
+.lark-menu.nav .child .link::after {
   background: #FFF;
 }
-.lark-menu.nav .submenu .menu-item.active > .link,
-.lark-menu.nav .submenu .link:hover,
-.lark-menu.nav .submenu .link:focus {
+.lark-menu.nav .child .menu-item.current > .link,
+.lark-menu.nav .child .link:hover,
+.lark-menu.nav .child .link:focus {
   color: #232221;
 }
 
-.lark-menu.nav .menu-item.active .submenu {
+.lark-menu.nav .menu-item.current .child {
   display: block;
 }
 /* @end */

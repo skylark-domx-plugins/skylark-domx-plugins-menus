@@ -6,11 +6,10 @@
     <title>Flipster Demo</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=550, initial-scale=1">
-    <link rel="stylesheet" href="../themes/twbs/css/bootstrap.css">
 
     <link rel="stylesheet" href="../../skins/default/menu.css">
     <link rel="stylesheet" href="../../skins/default/cascade.css">
-    <link rel="stylesheet" href="../../skins/default/nav.css">
+    <link rel="stylesheet" href="../../skins/default/nav.old.css">
     <style>
         *,
         *:before,
@@ -273,10 +272,25 @@
 
             let $imageItems = $("ul.flip-items > li"),
                 $nav,
+                $navItems,
+                $navLinks,
                 currentIndex,
-                $currentItem;
+                $currentItem,
+
+                classes = {
+                    navItem  : "menu-item",
+                    navCategory: "category",
+                    navCategoryLink : "link-category",
+                    navChild : "child",
+                    navLink : "link",
+                    navCurrent : "current"
+                };
+
+            var navCategories = {};
+
 
             $nav = $("#carousel .lark-menu"); //$('<ul class="' + classes.nav + '" role="navigation" />');
+            $navLinks = $('');
 
             let itemsData = []
             $imageItems.each(function(i) {
@@ -296,7 +310,7 @@
 
                     if (!itemsCategory) {
                       itemsCategory = {
-                        title : category,
+                        category,
                         index,
                         children : [
                         ]
@@ -314,21 +328,77 @@
 
             });
 
-            $nav.plugin("lark.menus.nav",{
-              data : {
-                items : itemsData
-              },
-              onAction : function(itemData) {
-                let index = itemData.index;
+            for (let i=0; i<itemsData.length;i++) {
+                let itemData = itemsData[i];
+                let navLink = $('<a href="#" class="' + classes.navLink + '">' + itemData.title + '</a>');
+
+                if (itemData.index !== undefined) {
+                    navLink.data('index', itemData.index);
+                }
+
+                $navLinks = $navLinks.add(navLink);
+
+                if (itemData.children) {
+                    let category = itemData.category,
+                        childrenItems = itemData.children;
+                    if ( !navCategories[category] ) {
+
+                        var categoryItem = $('<li class="' + classes.navItem + ' ' + classes.navCategory + '">');
+                        var categoryLink = $('<a href="#" class="' + classes.navLink + ' ' + classes.navCategoryLink + '" data-flip-category="' + category + '">' + category + '</a>')
+                                .data('category', itemData.category)
+                                .data('index', itemData.index);
+
+                        navCategories[category] = $('<ul class="' + classes.navChild + '" />');
+
+                        $navLinks = $navLinks.add(categoryLink);
+
+                        categoryItem
+                            .append(categoryLink, navCategories[category])
+                            .appendTo($nav);
+                    }
+
+                    for (let j =0 ;j<childrenItems.length;j++) {
+                       let childItemData = childrenItems[j];
+                       let navLink1 = $('<a href="#" class="' + classes.navLink + '">' + childItemData.title + '</a>')
+                        .data('index', childItemData.index);
+
+                      $navLinks = $navLinks.add(navLink1);
+                      navCategories[category].append(navLink1);                  
+                      navLink1.wrap('<li class="' + classes.navItem + '">');
+                    }
+                } else {
+                  $nav.append(navLink);                   
+                }
+                navLink.wrap('<li class="' + classes.navItem + '">');
+            }
+
+
+            $navItems = $nav.find('.' + classes.navItem);
+
+            $nav.on('click', 'a', function(e) {
+                var index = $(this).data('index');
                 if ( index >= 0 ) {
-                  show(index);
-                  // e.preventDefault();
-                }                
-              }
+                    show(index);
+                    e.preventDefault();
+                }
             });
 
+            function updateNavMenu() {
 
-           function show(index) {
+                var category = $currentItem.data('flip-category');
+
+                $navItems.removeClass(classes.navCurrent);
+
+                $navLinks
+                    .filter(function() {
+                        return ($(this).data('index') === currentIndex || (category && $(this).data('category') === category));
+                    })
+                    .parent()
+                    .addClass(classes.navCurrent);
+
+            }
+
+            function show(index) {
                 let $pre = $currentItem;
                 currentIndex =index;
                 $currentItem = $imageItems.eq(currentIndex);
@@ -340,7 +410,19 @@
                 } else {
                     $currentItem.show(100);                    
                 }
+                updateNavMenu();
             }
+
+            /*
+            $('.lark-menu.cascade.multiExpand').plugin("lark.menus.cascade",{
+              "multitier" : {
+                "mode" : "cascade",
+                "multiExpand" : true
+              }                
+            });
+            */
+
+
         };
     </script>
 

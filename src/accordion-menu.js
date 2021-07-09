@@ -17,6 +17,7 @@ define([
         Menu.prototype._construct.call(this,elm,options);
 
         lists.multitier(elm,langx.mixin({
+          togglable : true
         },this.options));
     }
 

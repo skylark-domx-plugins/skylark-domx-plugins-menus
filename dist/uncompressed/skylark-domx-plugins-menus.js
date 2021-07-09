@@ -98,6 +98,7 @@ define('skylark-domx-plugins-menus/menu',[
   "skylark-domx-plugins-base",
   "./menus"
 ],function(langx,$,lists,plugins,menus){
+  'use strict'
 
 
   var Menu = plugins.Plugin.inherit({
@@ -113,31 +114,49 @@ define('skylark-domx-plugins-menus/menu',[
       },
 
       selectors : {
-
+        container : null
       },
 
       item : {
         templates : {
-          general : "",
+          general : '<li class="menu-item"><a href="#" class="link"><%= title %></a></li>',
           separator : "",
-          hasChildern : ""
-        } 
+          hasChildren : '<li class="menu-item hasChildren"><a href="#" class="link"><%= title %></a><ul class="submenu"></ul>',
+        },
+
+        classes : {
+          base : "menu-item",
+          hasChildren : "hasChildren"
+        }
       },
 
-      chidren : {
+      children : {
         template : "<ul></ul>",
         classes : {
-          base : "children-menu"
-        }
+          base : "submenu"
+        },
+        selector : "> .submenu"
       },
 
       data : {
         ///items : []
-      }
+      },
+
+      onAction : null
     },
 
     _construct : function(elm,options) {
         plugins.Plugin.prototype._construct.call(this,elm,options);
+
+        this._$container = this.$(this.options.selectors.container);
+
+        if (this.options.onAction) {
+          this.listenTo(this._$container,"click",`.${this.options.item.classes.base}`,(e)=>{
+              var itemData = $(e.currentTarget).data("item");
+              this.options.onAction(itemData);
+
+          });
+        }
 
     },
 
@@ -155,18 +174,28 @@ define('skylark-domx-plugins-menus/menu',[
     },
 
     renderGeneralMenuItem : function(itemData) {
-      if (!this._renderItemHtml) {
-        let itemTpl = this.options.item.template;
+      if (!this._renderGeneralItemHtml) {
+        let itemTpl = this.options.item.templates.general;
         if (langx.isString(itemTpl)) {
-          this._renderItemHtml = langx.template(itemTpl);
+          this._renderGeneralItemHtml = langx.template(itemTpl);
         } else if (langx.isFunction(itemTpl)) {
-          this._renderItemHtml = itemTpl;
+          this._renderGeneralItemHtml = itemTpl;
         }
       }
+      return $(this._renderGeneralItemHtml(itemData));
     },
 
     renderHasChildrenMenuItem : function(itemData) {
+      if (!this._renderHasChildrenItemHtml) {
+        let itemTpl = this.options.item.templates.hasChildren;
+        if (langx.isString(itemTpl)) {
+          this._renderHasChildrenItemHtml = langx.template(itemTpl);
+        } else if (langx.isFunction(itemTpl)) {
+          this._renderHasChildrenItemHtml = itemTpl;
+        }
+      }
 
+      return $(this._renderHasChildrenItemHtml(itemData));
     }   
 
 
@@ -196,6 +225,7 @@ define('skylark-domx-plugins-menus/accordion-menu',[
         Menu.prototype._construct.call(this,elm,options);
 
         lists.multitier(elm,langx.mixin({
+          togglable : true
         },this.options));
     }
 
@@ -225,6 +255,7 @@ define('skylark-domx-plugins-menus/cascade-menu',[
         Menu.prototype._construct.call(this,elm,options);
 
         lists.multitier(elm,langx.mixin({
+          togglable : true
         },this.options));
     }
 
@@ -234,6 +265,90 @@ define('skylark-domx-plugins-menus/cascade-menu',[
   plugins.register(CascadeMenu);
 
   return menus.CascadeMenu = CascadeMenu;	
+});
+define('skylark-domx-plugins-menus/nav-menu',[
+  "skylark-langx/langx",
+  "skylark-domx-query",
+  "skylark-domx-lists",
+  "skylark-domx-plugins-base",
+  "./menus",
+  "./menu"
+],function(langx,$,lists,plugins,menus,Menu){
+  'use strict'
+
+  var NavMenu = Menu.inherit({
+    klassName : "NavMenu",
+
+    pluginName : "lark.menus.nav",
+
+    options : {
+      item : {
+        templates : {
+        } 
+      }
+    },
+
+    _construct : function(elm,options) {
+        Menu.prototype._construct.call(this,elm,options);
+
+        if (this.options.data.items) {
+          this.resetItems(this.options.data.items);
+        }
+
+        lists.multitier(elm,langx.mixin({
+          /*
+          show : function($el) {
+            $el;
+          },
+
+          hide : function($el) {
+            $el;
+
+          },
+
+          toggle : function($el) {
+            $el;
+
+          }
+          */
+        },this.options));
+    },
+
+    resetItems : function(itemsData) {
+      let self = this;
+
+      function renderItem(itemData,$container) {
+        let $item;
+        if (itemData.children) {
+          $item = self.renderHasChildrenMenuItem(itemData);
+        } else {
+          $item = self.renderGeneralMenuItem(itemData);
+        }
+
+        $item.data("item",itemData);
+        $container.append($item)
+
+        if (itemData.children) {
+          let $childrenContainer = $item.find(self.options.children.selector);
+          itemData.children.forEach((childItemData) => {
+            renderItem(childItemData,$childrenContainer);            
+          });
+        }
+      }
+        
+      let $itemsContainer = this.$(this.options.selectors.container)
+
+      itemsData.forEach((itemData)=>{
+        renderItem(itemData,$itemsContainer);
+      });
+    }
+
+  });
+
+
+  plugins.register(NavMenu);
+
+  return menus.NavMenu = NavMenu;	
 });
  define('skylark-domx-plugins-menus/tree-menu',[
   "skylark-langx/langx",
@@ -275,6 +390,7 @@ define('skylark-domx-plugins-menus/main',[
     "./menus",
     "./accordion-menu",
     "./cascade-menu",
+    "./nav-menu",
     "./tree-menu"
 ], function(menus) {
     return menus;
