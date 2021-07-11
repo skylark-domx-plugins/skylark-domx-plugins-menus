@@ -1,0 +1,1 @@
+{"version":3,"sources":["interact.js"],"names":["define","skylark","attach"],"mappings":";;;;;;;AAAAA,QACI,wBACA,cACD,SAASC,GAEX,OAAOA,EAAQC,OAAO","file":"../interact.js","sourcesContent":["define([\r\n    \"skylark-langx/skylark\",\r\n    \"./polyfill\"\r\n], function(skylark) {\r\n\r\n\treturn skylark.attach(\"domx.plugins.interact\",{});\r\n});\r\n\r\n"]}

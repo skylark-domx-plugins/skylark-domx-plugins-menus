@@ -109,12 +109,21 @@ requirejs.config({
             main: 'main'
          },
          {
+           name : "skylark-langx-scripter",
+           location : "../node_modules/skylark-langx-scripter/dist/uncompressed/skylark-langx-scripter",
+            main: 'main'
+         },
+         {
            name : "skylark-langx",
            location : "../node_modules/skylark-langx/dist/uncompressed/skylark-langx",
             main: 'main'
          },
 
-
+         {
+           name : "skylark-domx-animates",
+           location : "../node_modules/skylark-domx-animates/dist/uncompressed/skylark-domx-animates",
+            main: 'main'
+         },
          {
            name : "skylark-domx-browser",
            location : "../node_modules/skylark-domx-browser/dist/uncompressed/skylark-domx-browser",
@@ -187,11 +196,7 @@ requirejs.config({
             main: 'main'
          },
 
-         {
-           name : "skylark-domx-scripter",
-           location : "../node_modules/skylark-domx-scripter/dist/uncompressed/skylark-domx-scripter",
-            main: 'main'
-         },
+
          {
            name : "skylark-domx-styler",
            location : "../node_modules/skylark-domx-styler/dist/uncompressed/skylark-domx-styler",
@@ -205,6 +210,11 @@ requirejs.config({
          {
            name : "skylark-domx-transforms",
            location : "../node_modules/skylark-domx-transforms/dist/uncompressed/skylark-domx-transforms",
+            main: 'main'
+         },
+         {
+           name : "skylark-domx-transits",
+           location : "../node_modules/skylark-domx-transits/dist/uncompressed/skylark-domx-transits",
             main: 'main'
          },
          {
@@ -267,8 +277,7 @@ requirejs.config({
 });
  
 // require(["module/name", ...], function(params){ ... });
-require(["skylark-langx/langx","skylark-domx","skylark-bootstrap3/loadedInit"], function (langx,domx,bsInit) {
-    bsInit();
+require(["skylark-langx/langx","skylark-domx"], function (langx,domx) {
     require(["skylark-domx-plugins-menus"], function (menus) {
         if (window.initPage) {
             window.initPage(langx,domx,menus);

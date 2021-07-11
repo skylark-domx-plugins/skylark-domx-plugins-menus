@@ -1,11 +1,12 @@
 define([
   "skylark-langx/langx",
+  "skylark-devices-keyboard/keys",
   "skylark-domx-query",
   "skylark-domx-lists",
   "skylark-domx-plugins-base",
   "./menus",
   "./menu"
-],function(langx,$,lists,plugins,menus,Menu){
+],function(langx,keys,$,lists,plugins,menus,Menu){
   'use strict'
 
   var PopupMenu = Menu.inherit({
@@ -29,7 +30,10 @@ define([
 			select: null
 		},
 
-		_create: function() {
+    	_construct : function(elm,options) {
+        	Menu.prototype._construct.call(this,elm,options);
+			this.element = this.$();
+
 			this.activeMenu = this.element;
 
 			// Flag used to prevent firing of the click handler
@@ -37,14 +41,13 @@ define([
 			this.mouseHandled = false;
 			this.lastMousePosition = { x: null, y: null };
 			this.element
-				.uniqueId()
 				.attr( {
 					role: this.options.role,
 					tabIndex: 0
 				} );
 
 			this._addClass( "ui-menu", "ui-widget ui-widget-content" );
-			this._on( {
+			this.listenTo(this.element, {
 
 				// Prevent focus from sticking to links inside menu after clicking
 				// them (focus should always stay on UL during navigation).
@@ -83,9 +86,9 @@ define([
 				},
 				"mouseenter .ui-menu-item": "_activateItem",
 				"mousemove .ui-menu-item": "_activateItem",
-				mouseleave: "collapseAll",
+				"mouseleave": "collapseAll",
 				"mouseleave .ui-menu": "collapseAll",
-				focus: function( event, keepActiveItem ) {
+				"focus": function( event, keepActiveItem ) {
 
 					// If there's already an active item, keep it active
 					// If not, activate the first item
@@ -95,7 +98,7 @@ define([
 						this.focus( event, item );
 					}
 				},
-				blur: function( event ) {
+				"blur": function( event ) {
 					this._delay( function() {
 						var notContained = !$.contains(
 							this.element[ 0 ],
@@ -106,13 +109,13 @@ define([
 						}
 					} );
 				},
-				keydown: "_keydown"
+				"keydown": "_keydown"
 			} );
 
 			this.refresh();
 
 			// Clicks outside of a menu collapse any open menus
-			this._on( this.document, {
+			this.listenTo( $(document), {
 				click: function( event ) {
 					if ( this._closeOnDocumentClick( event ) ) {
 						this.collapseAll( event, true );
@@ -193,37 +196,37 @@ define([
 				preventDefault = true;
 
 			switch ( event.keyCode ) {
-			case $.ui.keyCode.PAGE_UP:
+			case keys.PAGE_UP:
 				this.previousPage( event );
 				break;
-			case $.ui.keyCode.PAGE_DOWN:
+			case keys.PAGE_DOWN:
 				this.nextPage( event );
 				break;
-			case $.ui.keyCode.HOME:
+			case keys.HOME:
 				this._move( "first", "first", event );
 				break;
-			case $.ui.keyCode.END:
+			case keys.END:
 				this._move( "last", "last", event );
 				break;
-			case $.ui.keyCode.UP:
+			case keys.UP:
 				this.previous( event );
 				break;
-			case $.ui.keyCode.DOWN:
+			case keys.DOWN:
 				this.next( event );
 				break;
-			case $.ui.keyCode.LEFT:
+			case keys.LEFT:
 				this.collapse( event );
 				break;
-			case $.ui.keyCode.RIGHT:
+			case keys.RIGHT:
 				if ( this.active && !this.active.is( ".ui-state-disabled" ) ) {
 					this.expand( event );
 				}
 				break;
-			case $.ui.keyCode.ENTER:
-			case $.ui.keyCode.SPACE:
+			case keys.ENTER:
+			case keys.SPACE:
 				this._activate( event );
 				break;
-			case $.ui.keyCode.ESCAPE:
+			case keys.ESC:
 				this.collapse( event );
 				break;
 			default:
@@ -326,13 +329,12 @@ define([
 			newItems = items.not( ".ui-menu-item, .ui-menu-divider" );
 			newWrappers = newItems.children()
 				.not( ".ui-menu" )
-					.uniqueId()
 					.attr( {
 						tabIndex: -1,
 						role: this._itemRole()
 					} );
-			this._addClass( newItems, "ui-menu-item" )
-				._addClass( newWrappers, "ui-menu-item-wrapper" );
+			newItems.addClass("ui-menu-item");
+			newWrappers.addClass("ui-menu-item-wrapper");
 
 			// Add aria-disabled attribute to any disabled menu item
 			items.filter( ".ui-state-disabled" ).attr( "aria-disabled", "true" );
@@ -348,22 +350,6 @@ define([
 				menu: "menuitem",
 				listbox: "option"
 			}[ this.options.role ];
-		},
-
-		_setOption: function( key, value ) {
-			if ( key === "icons" ) {
-				var icons = this.element.find( ".ui-menu-icon" );
-				this._removeClass( icons, null, this.options.icons.submenu )
-					._addClass( icons, null, value.submenu );
-			}
-			this._super( key, value );
-		},
-
-		_setOptionDisabled: function( value ) {
-			this._super( value );
-
-			this.element.attr( "aria-disabled", String( value ) );
-			this._toggleClass( null, "ui-state-disabled", !!value );
 		},
 
 		focus: function( event, item ) {
