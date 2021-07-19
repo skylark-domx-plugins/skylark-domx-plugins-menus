@@ -1,9 +1,0 @@
-{
-  "name": "skylark-domx-noder-examples",
-  "dependencies": {
-    "skylark-domx": "git+https://github.com/skylark-domx/skylark-domx.git"
-  },
-  "engines": {
-    "node": ">=0.8.0"
-  }
-}
