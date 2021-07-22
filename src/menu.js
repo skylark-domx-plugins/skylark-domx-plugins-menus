@@ -45,6 +45,13 @@ define([
         selector : "> .submenu"
       },
 
+      submenu : {
+        selectors : {
+          children : "> ul",
+          descendant : "ul"
+        }
+      },
+
       data : {
         ///items : []
       },

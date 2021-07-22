@@ -263,6 +263,11 @@ requirejs.config({
             main: 'main'
          },
          {
+           name : "skylark-devices-keyboard",
+           location : "../node_modules/skylark-devices-keyboard/dist/uncompressed/skylark-devices-keyboard",
+            main: 'main'
+         },
+         {
             name: 'skylark-bootstrap3',
             location : "../node_modules/skylark-bootstrap3/dist/uncompressed/skylark-bootstrap3",
             main: 'main'
