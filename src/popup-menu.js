@@ -17,7 +17,6 @@ define([
 
     	pluginName : "lark.menus.popup",
 
-		defaultElement: "<ul>",
 		delay: 300,
 		options: {
 			icons: {
@@ -32,13 +31,12 @@ define([
 
 			role: "menu",
 
-			classes : {
-				base : "ui-menu"
-			},
 
 			item : {
 				classes : {
-					base : "ui-menu-item"
+					base : "ui-menu-item",
+          			active : "ui-state-active",
+          			disabled : "ui-state-disabled"
 				},
 				selector : "> *"
 			},
@@ -65,7 +63,6 @@ define([
 					tabIndex: 0
 				} );
 
-			this.element.addClass( "ui-menu ui-widget ui-widget-content" );
 			this.listenTo(this.element, {
 
 				// Prevent focus from sticking to links inside menu after clicking
@@ -120,7 +117,7 @@ define([
 				},
 				"blur": function( event ) {
 					this._delay( function() {
-						var notContained = !langx.contains(
+						var notContained = !langx.includes(
 							this.element[ 0 ],
 							//$.ui.safeActiveElement( this.document[ 0 ] )
 							noder.active()
@@ -133,7 +130,7 @@ define([
 				"keydown": "_keydown"
 			} );
 
-			this.refresh();
+			///this.refresh();
 
 			// Clicks outside of a menu collapse any open menus
 			this.listenTo( $(document), {
@@ -177,7 +174,7 @@ define([
 			}
 
 			// If the item is already active, there's nothing to do
-			if ( target.is( ".ui-state-active" ) ) {
+			if ( target.is(`.${this.options.item.classes.active}`) ) {
 				return;
 			}
 
@@ -185,7 +182,7 @@ define([
 			// to avoid a jump caused by adjacent elements both having a class with a border
 			///this._removeClass( target.siblings().children( ".ui-state-active" ),
 			///	null, "ui-state-active" );
-			target.siblings().children( ".ui-state-active" ).removeClass("ui-state-active");
+			target.siblings().children( `.${this.options.item.classes.active}` ).removeClass(this.options.item.classes.active);
 			this.focus( event, target );
 		},
 
@@ -369,7 +366,7 @@ define([
 			items.filter( ".ui-state-disabled" ).attr( "aria-disabled", "true" );
 
 			// If the active item has been removed, blur the menu
-			if ( this.active && !langx.contains( this.element[ 0 ], this.active[ 0 ] ) ) {
+			if ( this.active && !langx.includes( this.element[ 0 ], this.active[ 0 ] ) ) {
 				this.blur();
 			}
 		},
@@ -391,7 +388,7 @@ define([
 
 			focused = this.active.children( ".ui-menu-item-wrapper" );
 			///this._addClass( focused, null, "ui-state-active" );
-			focused.addClass("ui-state-active");
+			focused.addClass(this.options.item.classes.active);
 
 			// Only update aria-activedescendant if there's a role
 			// otherwise we assume focus is managed elsewhere
@@ -405,7 +402,7 @@ define([
 					.closest( ".ui-menu-item" )
 						.children( ".ui-menu-item-wrapper" );
 			///this._addClass( activeParent, null, "ui-state-active" );
-			activeParent.addClass("ui-state-active" );
+			activeParent.addClass(this.options.item.classes.active );
 
 			if ( event && event.type === "keydown" ) {
 				this._close();
@@ -454,7 +451,7 @@ define([
 
 			///this._removeClass( this.active.children( ".ui-menu-item-wrapper" ),
 			///	null, "ui-state-active" );
-			this.active.children( ".ui-menu-item-wrapper" ).removeClass("ui-state-active");
+			this.active.children( ".ui-menu-item-wrapper" ).removeClass(this.options.item.classes.active);
 
 			///this._trigger( "blur", event, { item: this.active } );
 			this.trigger( "blur", { item: this.active } );
@@ -513,7 +510,7 @@ define([
 
 				// Work around active item staying active after menu is blurred
 				///this._removeClass( currentMenu.find( ".ui-state-active" ), null, "ui-state-active" );
-				currentMenu.find( ".ui-state-active" ).removeClass("ui-state-active" );
+				currentMenu.find( `.${this.options.item.classes.active}`).removeClass(this.options.item.classes.active );
 
 				this.activeMenu = currentMenu;
 			}, all ? 0 : this.delay );

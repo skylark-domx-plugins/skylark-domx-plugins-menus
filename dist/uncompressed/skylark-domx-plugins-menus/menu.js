@@ -33,6 +33,7 @@ define([
 
         classes : {
           base : "menu-item",
+          active : "",
           hasChildren : "hasChildren"
         }
       },
@@ -46,6 +47,7 @@ define([
       },
 
       submenu : {
+        template : "<ul></ul>",
         selectors : {
           children : "> ul",
           descendant : "ul"

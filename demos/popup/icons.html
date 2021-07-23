@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<ul id="menu">
+<ul id="menu" class="lark-menu ">
 	<li>
 		<div><span class="ui-icon ui-icon-disk"></span>Save</div>
 	</li>
@@ -56,33 +56,23 @@
         var initPage = function(langx,domx) {
             var $ = domx.query;
 
-			function isDivider( item ) {
-				// Match hyphen, em dash, en dash
-				return !/[^\-\u2014\u2013\s]/.test( item.text() );
-			}
 
-
-			function initJqueryUiMenu(menu) {
+			function initJqueryUiMenu($menu) {
 				var menus, items, newSubmenus, newItems, newWrappers,
-					///that = this,
-					///icon = this.options.icons.submenu,
-					icon = "ui-icon-caret-1-e",
+					that = this,
+					icon = this.options.icons.submenu,
 					//submenus = this.element.find( this.options.menus );
-					submenus = menu.find("ul");
-
-				menu.addClass( "ui-menu ui-widget ui-widget-content" );
-
+					submenus = $menu.find("ul");
 
 				///this._toggleClass( "ui-menu-icons", null, !!this.element.find( ".ui-icon" ).length );
-				menu.toggleClass("ui-menu-icons",!!menu.find( ".ui-icon" ).length);
+				$menu.toggleClass("ui-menu-icons",!!$menu.find( ".ui-icon" ).length);
 
 
 				// Initialize nested menus
 				newSubmenus = submenus.filter( ":not(.ui-menu)" )
 					.hide()
 					.attr( {
-						///role: this.options.role,
-						"role" : "menu",
+						role: this.options.role,
 						"aria-hidden": "true",
 						"aria-expanded": "false"
 					} )
@@ -97,19 +87,19 @@
 							.attr( "aria-haspopup", "true" )
 							.prepend( submenuCaret );
 						menu.attr( "aria-labelledby", item.attr( "id" ) );
-					});
+					} );
 
 				//this._addClass( newSubmenus, "ui-menu", "ui-widget ui-widget-content ui-front" );
 				newSubmenus.addClass([ "ui-menu", "ui-widget", "ui-widget-content", "ui-front"]);
 
-				menus = submenus.add( menu );
+				menus = submenus.add( this.element );
 				///items = menus.find( this.options.items );
 				items = menus.find("> *");
 
 				// Initialize menu-items containing spaces and/or dashes only as dividers
 				items.not( ".ui-menu-item" ).each( function() {
 					var item = $( this );
-					if ( isDivider( item ) ) {
+					if ( that._isDivider( item ) ) {
 						///that._addClass( item, "ui-menu-divider", "ui-widget-content" );
 						item.addClass(["ui-menu-divider", "ui-widget-content"] )
 					}
@@ -121,7 +111,7 @@
 					.not( ".ui-menu" )
 						.attr( {
 							tabIndex: -1,
-							////role: this._itemRole()
+							role: this._itemRole()
 						} );
 				newItems.addClass("ui-menu-item");
 				newWrappers.addClass("ui-menu-item-wrapper");
@@ -130,39 +120,11 @@
 				items.filter( ".ui-state-disabled" ).attr( "aria-disabled", "true" );
 			}
 
-			let $menu = $('#menu');
-			initJqueryUiMenu($menu)
 
-            $menu.plugin("lark.menus.popup",{
-				icons: {
-					submenu: "ui-icon-caret-1-e"
-				},
-
-				///position: {
-				///	my: "left top",
-				///	at: "right top"
-				///},
-
-				///role: "menu",
-
-				classes : {
-					base : "ui-menu"
-				},
-
-				item : {
-					classes : {
-						base : "ui-menu-item",
-	          			active : "ui-state-active",
-	          			disabled : "ui-state-disabled"
-					},
-					selector : "> *"
-				},
-
-				// Callbacks
-				blur: null,
-				focus: null,
-				select: null
-       
+            $('#menu').plugin("lark.menus.popup",{
+              "multitier" : {
+                "multiExpand" : true
+              }                
             });
 
 
