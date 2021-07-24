@@ -437,9 +437,10 @@ define('skylark-domx-plugins-menus/popup-menu',[
   "skylark-domx-query",
   "skylark-domx-lists",
   "skylark-domx-plugins-base",
+ 	"skylark-domx-plugins-popups/popups",
   "./menus",
   "./menu"
-],function(langx,keys,noder,styler, $,lists,plugins,menus,Menu){
+],function(langx,keys,noder,styler, $,lists,plugins,popups,menus,Menu){
   'use strict'
 
   	var PopupMenu = Menu.inherit({
@@ -807,9 +808,9 @@ define('skylark-domx-plugins-menus/popup-menu',[
 
 			// Don't open if already open fixes a Firefox bug that caused a .5 pixel
 			// shift in the submenu position when mousing over the caret icon
-			if ( submenu.attr( "aria-hidden" ) !== "true" ) {
-				return;
-			}
+			///if ( submenu.attr( "aria-hidden" ) !== "true" ) {
+			///	return;
+			///}
 
 			this.timer = this._delay( function() {
 				this._close();
@@ -827,11 +828,14 @@ define('skylark-domx-plugins-menus/popup-menu',[
 				.hide()
 				.attr( "aria-hidden", "true" );
 
-			submenu
-				.show()
-				.removeAttr( "aria-hidden" )
-				.attr( "aria-expanded", "true" )
-				.position( position );
+			//submenu
+			//	.show()
+			//	.removeAttr( "aria-hidden" )
+			//	.attr( "aria-expanded", "true" )
+			//	.position( position );
+			popups.open(submenu.attr( "aria-expanded", "true" ),{
+				position
+			});
 		},
 
 		collapseAll: function( event, all ) {
@@ -867,10 +871,11 @@ define('skylark-domx-plugins-menus/popup-menu',[
 				startMenu = this.active ? this.active.parent() : this.element;
 			}
 
-			startMenu.find(`.${this.options.submenu.classes.base}` )
-				.hide()
-				.attr( "aria-hidden", "true" )
-				.attr( "aria-expanded", "false" );
+			//startMenu.find(`.${this.options.submenu.classes.base}` )
+			//	.hide()
+			//	.attr( "aria-hidden", "true" )
+			//	.attr( "aria-expanded", "false" );
+			popups.close(startMenu.find(`.${this.options.submenu.classes.base}` ).attr( "aria-expanded", "false" ));
 		},
 
 		_closeOnDocumentClick: function( event ) {
