@@ -27,23 +27,25 @@ define([
           this.resetItems(this.options.data.items);
         }
 
-        lists.multitier(elm,langx.mixin({
-          /*
-          show : function($el) {
-            $el;
+        lists.multitier(elm, {
+          togglable : false,
+
+          classes : {
+            active :  this.options.item.classes.active  // active
+           /// collapse : "collapse",
+           /// in : "in",
           },
 
-          hide : function($el) {
-            $el;
-
+          selectors : {
+            item : this.options.item.selectors.general,          //li
+            sublist : this.options.submenu.selectors.descendant, //"ul",
+            hasSublist : this.options.item.selectors.hasChildren//":has(ul)",
+            ///handler : " > a"
           },
 
-          toggle : function($el) {
-            $el;
+          multiExpand : false
 
-          }
-          */
-        },this.options));
+        });
     },
 
     resetItems : function(itemsData) {
@@ -61,7 +63,7 @@ define([
         $container.append($item)
 
         if (itemData.children) {
-          let $childrenContainer = $item.find(self.options.children.selector);
+          let $childrenContainer = $item.find(self.options.submenu.selectors.children);
           itemData.children.forEach((childItemData) => {
             renderItem(childItemData,$childrenContainer);            
           });
