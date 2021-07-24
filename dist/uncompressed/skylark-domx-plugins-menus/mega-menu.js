@@ -16,7 +16,7 @@ define([
     options : {
       menuBehaviour: "click",
       stickyHeader: true,
-      selector: $(this),
+      //selector: $(this),
       caret:false,
       caretArrows: [{
         up: "caret-up",
@@ -46,8 +46,8 @@ define([
         var iDofSubMenus = [];
         var selectElementwithId = $("#"+subMenu.attr("id"));
 
-        var caretUp = defaults.caretArrows[0].up;
-        var caretDown = defaults.caretArrows[0].down;
+        var caretUp = this.options.caretArrows[0].up;
+        var caretDown = this.options.caretArrows[0].down;
 
         // Sticky Heder
 
@@ -107,7 +107,7 @@ define([
 
           $(this).on(settings.menuBehaviour,function(){
             // Find Position of Menu ULs to help pass index for perticular ID on each menu links
-            var findPositionOfSubmenus = jQuery.inArray( linkID, iDofSubMenus );
+            var findPositionOfSubmenus = langx.inArray( linkID, iDofSubMenus );
 
             var imageCaret = $(this).find(".caret.caret-img");
 
@@ -263,17 +263,14 @@ define([
            }
           });
 
-          $(document).ready(
-            function(){
-              $(".back-link").on('click', function(){
-                mainLinks.trigger('click');
-                $(mainLinks[mainLinks.length - 1]).trigger('click');
-              });
-            }
-          )
-
-
-
+          ///$(document).ready(
+          ///  function(){
+          ///    $(".back-link").on('click', function(){
+          ///      mainLinks.trigger('click');
+         ///       $(mainLinks[mainLinks.length - 1]).trigger('click');
+          ///    });
+          ///  }
+          ///)
     }
 
   });

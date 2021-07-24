@@ -2,6 +2,7 @@ define([
     "./menus",
     "./accordion-menu",
     "./cascade-menu",
+    "./mega-menu",
     "./nav-menu",
     "./tree-menu",
     "./popup-menu"
