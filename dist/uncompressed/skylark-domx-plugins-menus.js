@@ -5,10 +5,8 @@
  * @link https://github.com/skylark-domx/skylark-domx-plugins-menus/
  * @license MIT
  */
-(function(factory,globals) {
-  var define = globals.define,
-      require = globals.require,
-      isAmd = (typeof define === 'function' && define.amd),
+(function(factory,globals,define,require) {
+  var isAmd = (typeof define === 'function' && define.amd),
       isCmd = (!isAmd && typeof exports !== 'undefined');
 
   if (!isAmd && !define) {
@@ -87,9 +85,9 @@
 })(function(define,require) {
 
 define('skylark-domx-plugins-menus/menus',[
-	"skylark-langx/skylark"
-],function(skylark){
-	return skylark.attach("domx.plugins.menus");
+	"skylark-domx-plugins-base"
+],function(plugins){
+	return plugins.menus = {};
 });
 define('skylark-domx-plugins-menus/menu',[
   "skylark-langx/langx",
@@ -1335,5 +1333,5 @@ define('skylark-domx-plugins-menus/main',[
 define('skylark-domx-plugins-menus', ['skylark-domx-plugins-menus/main'], function (main) { return main; });
 
 
-},this);
+},this,define,require);
 //# sourceMappingURL=sourcemaps/skylark-domx-plugins-menus.js.map

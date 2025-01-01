@@ -5,5 +5,5 @@
  * @link https://github.com/skylark-domx/skylark-domx-plugins-menus/
  * @license MIT
  */
-define(["skylark-langx/langx","skylark-domx-query","skylark-domx-lists","skylark-domx-plugins-base","./menus","./menu","skylark-domx-plugins-toggles"],function(e,l,s,t,n,i){"use strict";var r=i.inherit({klassName:"Tree",pluginName:"lark.menus.tree",_construct:function(l,t){i.prototype._construct.call(this,l,t),s.multitier(l,e.mixin({hide:function(e){e.plugin("lark.toggles.collapse").hide()},toggle:function(e){e.plugin("lark.toggles.collapse").toggle()}},this.options))}});return t.register(r),n.TreeMenu=r});
+define(["skylark-langx/langx","skylark-domx-query","skylark-domx-lists","skylark-domx-plugins-base","./menus","./menu","skylark-domx-plugins-toggles"],function(s,e,t,l,n,i){"use strict";var r=i.inherit({klassName:"Tree",pluginName:"lark.menus.tree",_construct:function(e,l){i.prototype._construct.call(this,e,l),t.multitier(e,s.mixin({hide:function(e){e.plugin("lark.toggles.collapse").hide()},toggle:function(e){e.plugin("lark.toggles.collapse").toggle()}},this.options))}});return l.register(r),n.TreeMenu=r});
 //# sourceMappingURL=sourcemaps/tree-menu.js.map

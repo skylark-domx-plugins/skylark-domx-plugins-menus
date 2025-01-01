@@ -24,6 +24,11 @@ requirejs.config({
             main: 'main'
          },
          {
+           name : "skylark-langx-chars",
+           location : "../node_modules/skylark-langx-chars/dist/uncompressed/skylark-langx-chars",
+            main: 'main'
+         },
+         {
            name : "skylark-langx-constructs",
            location : "../node_modules/skylark-langx-constructs/dist/uncompressed/skylark-langx-constructs",
             main: 'main'
@@ -81,6 +86,11 @@ requirejs.config({
          {
            name : "skylark-langx-objects",
            location : "../node_modules/skylark-langx-objects/dist/uncompressed/skylark-langx-objects",
+            main: 'main'
+         },
+         {
+           name : "skylark-langx-paths",
+           location : "../node_modules/skylark-langx-paths/dist/uncompressed/skylark-langx-paths",
             main: 'main'
          },
          {
@@ -182,6 +192,11 @@ requirejs.config({
          {
            name : "skylark-domx-lists",
            location : "../node_modules/skylark-domx-lists/dist/uncompressed/skylark-domx-lists",
+            main: 'main'
+         },
+         {
+           name : "skylark-domx-medias",
+           location : "../node_modules/skylark-domx-medias/dist/uncompressed/skylark-domx-medias",
             main: 'main'
          },
          {

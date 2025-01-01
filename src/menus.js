@@ -1,5 +1,5 @@
 define([
-	"skylark-langx/skylark"
-],function(skylark){
-	return skylark.attach("domx.plugins.menus");
+	"skylark-domx-plugins-base"
+],function(plugins){
+	return plugins.menus = {};
 });

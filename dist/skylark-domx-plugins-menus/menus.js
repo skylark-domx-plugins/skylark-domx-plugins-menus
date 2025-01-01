@@ -5,5 +5,5 @@
  * @link https://github.com/skylark-domx/skylark-domx-plugins-menus/
  * @license MIT
  */
-define(["skylark-langx/skylark"],function(n){return n.attach("domx.plugins.menus")});
+define(["skylark-domx-plugins-base"],function(n){return n.menus={}});
 //# sourceMappingURL=sourcemaps/menus.js.map
